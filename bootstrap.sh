@@ -38,6 +38,21 @@ DISK="/dev/sda"
 ok "Running as root in NixOS live environment"
 ok "Target disk: $DISK ($(lsblk -dno SIZE $DISK))"
 
+# ── Expand available memory with zram swap ─────────────────────────
+# The live ISO runs on tmpfs (RAM). The nix store lives there too.
+# 4GB fills up fast when downloading packages. zram gives us
+# compressed swap in RAM — effectively ~2x usable memory.
+step "Setting up zram swap (prevents out-of-space during install)"
+if ! swapon --show | grep -q zram; then
+  modprobe zram
+  echo "8G" > /sys/block/zram0/disksize
+  mkswap /dev/zram0
+  swapon /dev/zram0
+  ok "zram swap enabled (8GB compressed)"
+else
+  ok "zram swap already active"
+fi
+
 # ── Enable flakes ──────────────────────────────────────────────────
 step "Enabling flakes"
 mkdir -p ~/.config/nix

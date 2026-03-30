@@ -17,7 +17,8 @@ click **"Download (64-bit ARM)"**.
 2. It'll say "Unable to detect operating system" — click Continue
 3. Select **"Other Linux"** → OK
 4. Name it `agent-vm`, check **"Customize settings before installation"**
-5. Set: **4 CPUs, 4096 MB RAM, 32 GB disk**
+5. Set: **4 CPUs, 8192 MB RAM (8GB), 32 GB disk**
+   *(8GB is needed for the install — you can lower it to 4GB after if you want)*
 6. Optionally remove: Sound, Camera, Printer
 7. Close settings — VM boots
 

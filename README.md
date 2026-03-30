@@ -9,7 +9,7 @@ Minimal, declarative NixOS environment for AI coding agents on Parallels (Apple 
 ## Quick Start
 
 1. Download [NixOS Minimal ISO (64-bit ARM)](https://nixos.org/download/#nixos-iso)
-2. Create a Parallels VM (Other Linux, 4 CPU, 4GB RAM, 32GB disk)
+2. Create a Parallels VM (Other Linux, 4 CPU, 8GB RAM, 32GB disk)
 3. Boot the ISO, then:
 
 ```bash
