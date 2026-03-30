@@ -120,7 +120,16 @@ cp "$WORK_DIR"/configuration.nix "$NIXOS_DIR/"
 cp "$WORK_DIR"/hardware.nix    "$NIXOS_DIR/"
 cp "$WORK_DIR"/disk-config.nix "$NIXOS_DIR/"
 [[ -f "$WORK_DIR/.secrets.template" ]] && cp "$WORK_DIR/.secrets.template" "$NIXOS_DIR/"
-ok "Config files copied to $NIXOS_DIR"
+
+# Flakes require the directory to be a git repo for proper evaluation.
+# Without this, nixos-install hits an assertion error generating the lock file.
+cd "$NIXOS_DIR"
+git init -q
+git add -A
+git commit -q -m "nixos-agent-vm bootstrap"
+cd /
+
+ok "Config files copied and git-tracked at $NIXOS_DIR"
 
 # ── Prevent tmpfs from filling up ──────────────────────────────────
 # The live ISO runs in RAM. The nix store + downloads will overflow

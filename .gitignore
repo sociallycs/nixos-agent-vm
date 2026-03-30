@@ -1,0 +1,11 @@
+.secrets
+result
+*.qcow2
+*.img
+*.hdd
+
+# macOS
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
