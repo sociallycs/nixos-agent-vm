@@ -182,6 +182,10 @@
     };
   };
 
+  # ── Tailscale VPN ─────────────────────────────────────────────────
+  services.tailscale.enable = true;
+  networking.firewall.trustedInterfaces = [ "tailscale0" ];
+
   # ── Disable bloat ────────────────────────────────────────────────
   services.xserver.enable = false;
   services.pulseaudio.enable = false;
