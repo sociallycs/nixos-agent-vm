@@ -127,6 +127,9 @@
     nixfmt-rfc-style  # nix formatter
     nix-tree      # explore nix store
 
+    # sandboxing (Codex CLI requires bwrap)
+    bubblewrap
+
     # networking / debug
     dig
     traceroute
@@ -152,6 +155,11 @@
     fi
 
     chown -R dev:users $NPM_CONFIG_PREFIX
+  '';
+
+  # Codex CLI expects bwrap at /usr/bin/bwrap
+  system.activationScripts.bwrapSymlink = ''
+    ln -sf ${pkgs.bubblewrap}/bin/bwrap /usr/bin/bwrap
   '';
 
   environment.variables = {
