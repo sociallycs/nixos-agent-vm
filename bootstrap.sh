@@ -125,6 +125,8 @@ cp "$WORK_DIR"/disk-config.nix "$NIXOS_DIR/"
 # Without this, nixos-install hits an assertion error generating the lock file.
 cd "$NIXOS_DIR"
 git init -q
+git config user.email "bootstrap@nixos"
+git config user.name "bootstrap"
 git add -A
 git commit -q -m "nixos-agent-vm bootstrap"
 cd /
