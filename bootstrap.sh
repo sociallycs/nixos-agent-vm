@@ -107,11 +107,25 @@ cp "$WORK_DIR"/disk-config.nix "$NIXOS_DIR/"
 [[ -f "$WORK_DIR/.secrets.template" ]] && cp "$WORK_DIR/.secrets.template" "$NIXOS_DIR/"
 ok "Config files copied to $NIXOS_DIR"
 
+# ── Prevent tmpfs from filling up ──────────────────────────────────
+# The live ISO runs in RAM. The nix store + downloads will overflow
+# the tmpfs if we don't redirect temp files to the mounted disk.
+step "Setting up build space on disk (avoids tmpfs overflow)"
+mkdir -p /mnt/tmp
+export TMPDIR=/mnt/tmp
+ok "TMPDIR set to /mnt/tmp"
+
 # ── Install NixOS ─────────────────────────────────────────────────
 step "Installing NixOS (this takes a few minutes)"
-nixos-install --flake "$NIXOS_DIR#agent-vm" --no-root-passwd
+nixos-install \
+  --flake "$NIXOS_DIR#agent-vm" \
+  --no-root-passwd \
+  --no-channel-copy
 
 ok "NixOS installed!"
+
+# Clean up build artifacts from disk
+rm -rf /mnt/tmp
 
 # ── Done ───────────────────────────────────────────────────────────
 echo ""
